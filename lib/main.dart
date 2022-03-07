@@ -20,6 +20,7 @@ void main() {
         loginRoute: (context) => const LoginView(),
         registerRoute: (context) => const RegisterView(),
         notesRoute: (context) => const NotesView(),
+        verifyEmailRoute: (context) => const VerifyEmailView(),
       },
     ),
   );
@@ -45,15 +46,6 @@ class HomePage extends StatelessWidget {
               } else {
                 return const VerifyEmailView();
               }
-              // try {
-              //   FirebaseAuth.instance.currentUser!.delete();
-              // } on FirebaseAuthException catch (e) {
-              //   if (e.code == 'requires-recent-login') {
-              //     print(
-              //         'The user must reauthenticate before this operation can be executed.');
-              //   }
-              // }
-              // return const LoginView();
             } else {
               return const LoginView();
             }
