@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mynotes/services/auth/auth_service.dart';
+import 'package:mynotes/utilities/dialogs/cannot_share_emty_note_dialog.dart';
 import 'package:mynotes/utilities/generics/get_arguments.dart';
 import 'package:mynotes/services/cloud/cloud_note.dart';
-import 'package:mynotes/services/cloud/cloud_storage_exceptions.dart';
 import 'package:mynotes/services/cloud/firebase_cloud_storage.dart';
+import 'package:share_plus/share_plus.dart';
 
 class CreateUpdateNoteView extends StatefulWidget {
   const CreateUpdateNoteView({Key? key}) : super(key: key);
@@ -92,25 +93,39 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('New Note'),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              final text = _textController.text;
+              if (_note == null || text.isEmpty) {
+                await showCannotShareEmtyNoteDialog(context);
+              } else {
+                Share.share(text);
+              }
+            },
+            icon: const Icon(Icons.share),
+          )
+        ],
       ),
       body: FutureBuilder(
-          future: createOrGetExistingNote(context),
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.done:
-                _setupTextControllerListener();
-                return TextField(
-                  controller: _textController,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  decoration: const InputDecoration(
-                    hintText: 'Start typing your note...',
-                  ),
-                );
-              default:
-                return const CircularProgressIndicator();
-            }
-          }),
+        future: createOrGetExistingNote(context),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.done:
+              _setupTextControllerListener();
+              return TextField(
+                controller: _textController,
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                decoration: const InputDecoration(
+                  hintText: 'Start typing your note...',
+                ),
+              );
+            default:
+              return const CircularProgressIndicator();
+          }
+        },
+      ),
     );
   }
 }
