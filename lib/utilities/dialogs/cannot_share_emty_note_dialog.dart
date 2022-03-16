@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:mynotes/extensions/buildcontext/loc.dart';
 import 'package:mynotes/utilities/dialogs/generic_dialog.dart';
 
 Future<void> showCannotShareEmtyNoteDialog(BuildContext context) {
   return showGenericDialog<void>(
     context: context,
-    title: 'Sharing',
-    content: 'You cannot share an emty note!',
+    title: context.loc.sharing,
+    content: context.loc.cannot_share_empty_note_prompt,
     optionsBuilder: () => {
-      'OK': null,
+      context.loc.ok: null,
     },
   );
 }
