@@ -2,7 +2,7 @@
 
 This App just a simple Flutter project.
 
-This app has simple function like: C(Create)R(Read)U(Update)D(Delete) notes
+This app has simple function like: C(Create)R(Read)U(Update)D(Delete) notes.
 Your notes will save on Firebase by an account you have create and login before write notes.
 
 ## Getting Started
